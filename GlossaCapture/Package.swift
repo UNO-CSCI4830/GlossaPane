@@ -5,11 +5,18 @@ import PackageDescription
 
 let package = Package(
     name: "GlossaCapture",
+    // NFR6: macOS 13 or later. (The package still builds elsewhere for tests;
+    // the macOS-only parts are wrapped in #if os(macOS).)
+    platforms: [.macOS(.v13)],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "GlossaCapture",
             targets: ["GlossaCapture"]
+        ),
+        .executable(
+            name: "CaptureDemo",
+            targets: ["CaptureDemo"]
         ),
     ],
     targets: [
@@ -17,6 +24,13 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "GlossaCapture",
+            swiftSettings: [
+                .enableUpcomingFeature("ApproachableConcurrency"),
+            ],
+        ),
+        .executableTarget(
+            name: "CaptureDemo",
+            dependencies: ["GlossaCapture"],
             swiftSettings: [
                 .enableUpcomingFeature("ApproachableConcurrency"),
             ],
