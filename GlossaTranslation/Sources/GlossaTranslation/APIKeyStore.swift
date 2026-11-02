@@ -1,6 +1,6 @@
 import Foundation
 
-#if canImport(Security)
+#if os(macOS)
 import Security
 #endif
 
@@ -8,7 +8,7 @@ import Security
 /// written in the source code, a settings file, or a log (NFR3).
 public enum APIKeyStore {
 
-    #if canImport(Security)
+    #if os(macOS)
 
     private static let service = "GlossaPane.TranslationAPIKey"
     private static let account = "default"
@@ -45,7 +45,8 @@ public enum APIKeyStore {
 
     #else
 
-    /// Keychain storage is unavailable on this platform.
+    /// API key storage is unavailable outside macOS.
+    /// This implementation exists only for cross-platform compilation.
     @discardableResult
     public static func save(_ key: String) -> Bool {
         return false
