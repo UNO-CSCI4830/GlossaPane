@@ -48,7 +48,7 @@ import Testing
         permission: FakePermission(status: .notGranted)
     )
 
-    #expect(throws: CaptureError.permissionDenied) {
+    await #expect(throws: CaptureError.permissionDenied) {
         try await controller.start(source: .display(id: "1")) { _ in }
     }
     #expect(await controller.isRunning == false)

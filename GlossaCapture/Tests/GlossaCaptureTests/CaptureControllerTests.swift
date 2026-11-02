@@ -12,7 +12,7 @@ private func makeController(_ steps: [FakeCapturer.Step]) -> (CaptureController,
 @Test func invalidSourceDoesNotStart() async {
     let (controller, capturer) = makeController([.frame(makeFrame())])
 
-    #expect(throws: CaptureError.invalidSource) {
+    await #expect(throws: CaptureError.invalidSource) {
         try await controller.start(source: .region(x: 0, y: 0, width: 0, height: 10)) { _ in }
     }
     #expect(await controller.isRunning == false)
