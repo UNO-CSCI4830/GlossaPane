@@ -1,5 +1,8 @@
 import Foundation
+
+#if canImport(CoreGraphics)
 import CoreGraphics
+#endif
 
 /// One line of text found on the screen. This is what the capture and OCR step
 /// hands to the translation step (FR10).

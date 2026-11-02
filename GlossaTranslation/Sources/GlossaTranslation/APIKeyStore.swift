@@ -1,9 +1,15 @@
 import Foundation
+
+#if canImport(Security)
 import Security
+#endif
 
 /// Keeps the translation service key in the macOS Keychain, so it is never
 /// written in the source code, a settings file, or a log (NFR3).
 public enum APIKeyStore {
+
+    #if canImport(Security)
+
     private static let service = "GlossaPane.TranslationAPIKey"
     private static let account = "default"
 
@@ -36,4 +42,18 @@ public enum APIKeyStore {
         }
         return String(data: data, encoding: .utf8)
     }
+
+    #else
+
+    /// Keychain storage is unavailable on this platform.
+    @discardableResult
+    public static func save(_ key: String) -> Bool {
+        return false
+    }
+
+    public static func load() -> String? {
+        return nil
+    }
+
+    #endif
 }

@@ -1,5 +1,10 @@
 import Foundation
 
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
+
+
 /// Anything that can translate text. The real one calls the cloud service.
 /// The tests use a fake one.
 public protocol TranslationService: Sendable {
